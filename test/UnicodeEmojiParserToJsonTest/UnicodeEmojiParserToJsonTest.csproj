@@ -24,6 +24,12 @@
     <Content Include="resources\simple.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="resources\unicode-org-emoji-charts-full-emoji-list-v13-0.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\unicode-org-emoji-charts-full-emoji-list-v14-0.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
