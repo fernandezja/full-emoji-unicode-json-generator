@@ -23,12 +23,6 @@
     <Content Include="resources\simple.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\unicode-org-emoji-charts-full-emoji-list-v13-0.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="resources\unicode-org-emoji-charts-full-emoji-list-v14-0.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
