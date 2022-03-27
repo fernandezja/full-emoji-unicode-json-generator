@@ -3,11 +3,27 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
+	<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\emoji-invalid.json" />
+    <None Remove="resources\emoji.json" />
+    <None Remove="resources\simple.html" />
     <None Remove="resources\unicode-org-emoji-charts-full-emoji-list-v13-0.html" />
     <None Remove="resources\unicode-org-emoji-charts-full-emoji-list-v14-0.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\emoji-invalid.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\emoji.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\simple.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -25,18 +41,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\UnicodeEmojiParserToJson\UnicodeEmojiParserToJson.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="resources\emoji-invalid.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Update="resources\emoji.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Update="resources\simple.html">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
