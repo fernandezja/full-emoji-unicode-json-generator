@@ -16,7 +16,7 @@ namespace UnicodeEmojiParserToJsonTest
         {
             var parser = new UnicodeEmojiParser();
 
-            var htmlContentPath = ToApplicationPath("resources/simple.html");
+            var htmlContentPath = TestHelper.ToApplicationPath("resources/simple.html");
 
             var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
 
@@ -36,7 +36,7 @@ namespace UnicodeEmojiParserToJsonTest
         {
             var parser = new UnicodeEmojiParser();
 
-            var htmlContentPath = ToApplicationPath("resources/simple.html");
+            var htmlContentPath = TestHelper.ToApplicationPath("resources/simple.html");
 
             var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
 
@@ -65,8 +65,8 @@ namespace UnicodeEmojiParserToJsonTest
         {
             var parser = new UnicodeEmojiParser();
 
-            var htmlContentPath = ToApplicationPath("resources/simple.html");
-            var jsonPath = ToApplicationPath("resources/emoji.json");
+            var htmlContentPath = TestHelper.ToApplicationPath("resources/simple.html");
+            var jsonPath = TestHelper.ToApplicationPath("resources/emoji.json");
 
             var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
 
@@ -84,7 +84,7 @@ namespace UnicodeEmojiParserToJsonTest
         //{
         //    var parser = new UnicodeEmojiParser();
 
-        //    var htmlContentPath = ToApplicationPath("resources/unicode-org-emoji-charts-full-emoji-list-13.0.html");
+        //    var htmlContentPath = TestHelper.ToApplicationPath("resources/unicode-org-emoji-charts-full-emoji-list-13.0.html");
 
         //    var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
 
@@ -120,13 +120,6 @@ namespace UnicodeEmojiParserToJsonTest
         //}
 
 
-        public string ToApplicationPath(string fileName)
-        {
-            var exePath = Path.GetDirectoryName(System.Reflection
-                                .Assembly.GetExecutingAssembly().Location);
-            var appPathMatcher = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
-            var appRoot = appPathMatcher.Match(exePath).Value;
-            return Path.Combine(appRoot, fileName);
-        }
-        }
+
+    }
 }

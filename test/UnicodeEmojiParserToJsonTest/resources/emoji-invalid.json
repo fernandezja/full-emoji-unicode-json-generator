@@ -1,0 +1,26 @@
+[
+  {
+    "charsInvalid": "😀",
+    "group": "Smileys & Emotion",
+    "subgroup": "face-smiling",
+    "number": "1",
+    "code": "U+1F600",
+    "shortname": "grinning face"
+  },
+  {
+    "charsInvalid": "😃",
+    "group": "Smileys & Emotion",
+    "subgroup": "face-smiling",
+    "number": "2",
+    "code": "U+1F603",
+    "shortname": "grinning face with big eyes"
+  },
+  {
+    "charsInvalid": "😄",
+    "group": "Smileys & Emotion",
+    "subgroup": "face-smiling",
+    "number": "3",
+    "code": "U+1F604",
+    "shortname": "grinning face with smiling eyes"
+  }
+]

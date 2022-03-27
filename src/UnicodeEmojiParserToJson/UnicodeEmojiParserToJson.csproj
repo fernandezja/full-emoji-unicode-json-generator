@@ -6,7 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\emoji-json-scheme.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\emoji-json-scheme.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.16.1" />
+    <PackageReference Include="JsonSchema.Net" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

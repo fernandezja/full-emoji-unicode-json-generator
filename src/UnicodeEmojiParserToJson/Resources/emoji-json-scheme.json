@@ -1,0 +1,122 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://raw.githubusercontent.com/fernandezja/full-emoji-unicode-json/master/emojis.json",
+  "type": "array",
+  "title": "Emoji schema",
+  "description": "Emoji data list validator schema.",
+  "default": [],
+  "examples": [
+    [
+      {
+        "chars": "😀",
+        "group": "Smileys & Emotion",
+        "subgroup": "face-smiling",
+        "number": "1",
+        "code": "U+1F600",
+        "shortname": "grinning face"
+      },
+      {
+        "chars": "😃",
+        "group": "Smileys & Emotion",
+        "subgroup": "face-smiling",
+        "number": "2",
+        "code": "U+1F603",
+        "shortname": "grinning face with big eyes"
+      }
+    ]
+  ],
+  "additionalItems": true,
+  "items": {
+    "$id": "#/items",
+    "anyOf": [
+      {
+        "$id": "#/items/anyOf/0",
+        "type": "object",
+        "title": "The first anyOf schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": {},
+        "examples": [
+          {
+            "chars": "😀",
+            "group": "Smileys & Emotion",
+            "subgroup": "face-smiling",
+            "number": "1",
+            "code": "U+1F600",
+            "shortname": "grinning face"
+          }
+        ],
+        "required": [
+          "chars",
+          "group",
+          "subgroup",
+          "number",
+          "code",
+          "shortname"
+        ],
+        "properties": {
+          "chars": {
+            "$id": "#/items/anyOf/0/properties/chars",
+            "type": "string",
+            "title": "The chars schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "😀"
+            ]
+          },
+          "group": {
+            "$id": "#/items/anyOf/0/properties/group",
+            "type": "string",
+            "title": "The group schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "Smileys & Emotion"
+            ]
+          },
+          "subgroup": {
+            "$id": "#/items/anyOf/0/properties/subgroup",
+            "type": "string",
+            "title": "The subgroup schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "face-smiling"
+            ]
+          },
+          "number": {
+            "$id": "#/items/anyOf/0/properties/number",
+            "type": "string",
+            "title": "The number schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "1"
+            ]
+          },
+          "code": {
+            "$id": "#/items/anyOf/0/properties/code",
+            "type": "string",
+            "title": "The code schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "U+1F600"
+            ]
+          },
+          "shortname": {
+            "$id": "#/items/anyOf/0/properties/shortname",
+            "type": "string",
+            "title": "The shortname schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "grinning face"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    ]
+  }
+}
