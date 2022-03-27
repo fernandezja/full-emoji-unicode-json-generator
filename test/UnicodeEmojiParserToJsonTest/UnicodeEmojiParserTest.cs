@@ -12,15 +12,15 @@ namespace UnicodeEmojiParserToJsonTest
     {
 
         [Fact]
-        public async Task ParserRunFromStaticContentSimple()
+        public void ParserRunFromStaticContentSimple()
         {
             var parser = new UnicodeEmojiParser();
 
             var htmlContentPath = TestHelper.ToApplicationPath("resources/simple.html");
 
-            var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
+            var htmlContent = File.ReadAllText(htmlContentPath);
 
-            await parser.ParserRunFromStaticContent(htmlContent);
+            parser.ParserRunFromStaticContent(htmlContent).ConfigureAwait(false);
 
             Assert.True(parser.RowsCount > 0);
             Assert.Equal(6, parser.RowsCount);
@@ -32,15 +32,15 @@ namespace UnicodeEmojiParserToJsonTest
 
 
         [Fact]
-        public async Task ToJson()
+        public void ToJson()
         {
             var parser = new UnicodeEmojiParser();
 
             var htmlContentPath = TestHelper.ToApplicationPath("resources/simple.html");
 
-            var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
+            var htmlContent = File.ReadAllText(htmlContentPath);
 
-            await parser.ParserRunFromStaticContent(htmlContent);
+            parser.ParserRunFromStaticContent(htmlContent).ConfigureAwait(false);
 
             var jsonData = parser.ToJson();
 
@@ -61,16 +61,16 @@ namespace UnicodeEmojiParserToJsonTest
 
 
         [Fact]
-        public async Task ToJsonWriteToFile()
+        public void ToJsonWriteToFile()
         {
             var parser = new UnicodeEmojiParser();
 
             var htmlContentPath = TestHelper.ToApplicationPath("resources/simple.html");
             var jsonPath = TestHelper.ToApplicationPath("resources/emoji.json");
 
-            var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
+            var htmlContent = File.ReadAllText(htmlContentPath);
 
-            await parser.ParserRunFromStaticContent(htmlContent);
+            parser.ParserRunFromStaticContent(htmlContent).ConfigureAwait(false);
 
             parser.ToJsonWriteToFile(jsonPath);
 
