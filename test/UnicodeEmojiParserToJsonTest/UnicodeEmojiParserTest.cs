@@ -84,7 +84,7 @@ namespace UnicodeEmojiParserToJsonTest
         //{
         //    var parser = new UnicodeEmojiParser();
 
-        //    var htmlContentPath = ToApplicationPath("resources/unicode-org-emoji-charts-full-emoji-list.html");
+        //    var htmlContentPath = ToApplicationPath("resources/unicode-org-emoji-charts-full-emoji-list-13.0.html");
 
         //    var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
 
