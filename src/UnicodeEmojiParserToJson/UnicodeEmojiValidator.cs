@@ -5,12 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace UnicodeEmojiParserToJson
 {
     public class UnicodeEmojiValidator
     {
-        public ValidationResults ValidationResults { get; private set; }
+        private EvaluationOptions _evaluationOptions = new EvaluationOptions()
+        {
+            EvaluateAs = SpecVersion.Draft7
+            //OutputFormat = OutputFormat.List,
+            //ValidateAgainstMetaSchema = false
+        };
+
+
 
         public bool IsValid(string emojiDataJson) {
 
@@ -18,9 +26,10 @@ namespace UnicodeEmojiParserToJson
 
             var dataJson = JsonDocument.Parse(emojiDataJson).RootElement;
 
-            ValidationResults = jsonSchema.Validate(dataJson);
+            var result = jsonSchema.Evaluate(dataJson,
+                                             _evaluationOptions);
 
-            return ValidationResults.IsValid;
+            return result.IsValid;
 
         }
             
