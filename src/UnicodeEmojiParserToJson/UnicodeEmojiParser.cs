@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -21,6 +22,14 @@ namespace UnicodeEmojiParserToJson
 
         public int RowsCount { get; set; }
         public List<Emoji> Emojis { get; set; }
+
+        private IHttpClientFactory _httpClientFactory;
+
+
+        public UnicodeEmojiParser(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
 
         public async Task ParserRunFromAddress()
         {
