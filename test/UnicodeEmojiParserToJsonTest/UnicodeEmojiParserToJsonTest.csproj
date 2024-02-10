@@ -12,6 +12,7 @@
     <None Remove="resources\simple.html" />
     <None Remove="resources\unicode-org-emoji-charts-full-emoji-list-v13-0.html" />
     <None Remove="resources\unicode-org-emoji-charts-full-emoji-list-v14-0.html" />
+    <None Remove="resources\unicode-org-emoji-charts-full-emoji-list-v15-1.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +26,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\unicode-org-emoji-charts-full-emoji-list-v13-0.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\unicode-org-emoji-charts-full-emoji-list-v15-1.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\unicode-org-emoji-charts-full-emoji-list-v14-0.html">

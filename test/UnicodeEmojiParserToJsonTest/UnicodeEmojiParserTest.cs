@@ -79,19 +79,21 @@ namespace UnicodeEmojiParserToJsonTest
         }
 
 
-        //[Fact]
-        //public async Task ParserRunFromStaticContentFull()
-        //{
-        //    var parser = new UnicodeEmojiParser();
+        [Theory]
+        //[InlineData("unicode-org-emoji-charts-full-emoji-list-v14-0.html", 2109)]
+        [InlineData("unicode-org-emoji-charts-full-emoji-list-v15-1.html", 20423)]
+        public async Task ParserRunFromStaticContentFull(string resourceHtmlPageName, int expectedCount)
+        {
+            var parser = new UnicodeEmojiParser();
 
-        //    var htmlContentPath = TestHelper.ToApplicationPath("resources/unicode-org-emoji-charts-full-emoji-list-13.0.html");
+            var htmlContentPath = TestHelper.ToApplicationPath($"resources/{resourceHtmlPageName}");
 
-        //    var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
+            var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
 
-        //    await parser.ParserRunFromStaticContent(htmlContent);
+            await parser.ParserRunFromStaticContent(htmlContent);
 
-        //    Assert.True(parser.RowsCount > 0);
-        //}
+            Assert.Equal(expectedCount, parser.RowsCount);
+        }
 
 
         //[Fact]
