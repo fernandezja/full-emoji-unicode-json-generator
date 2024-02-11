@@ -2,6 +2,7 @@
 using AngleSharp.Dom;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using SerilogTimings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace UnicodeEmojiParserToJson
@@ -24,17 +26,27 @@ namespace UnicodeEmojiParserToJson
         public List<Emoji> Emojis { get; set; }
 
         private IHttpClientFactory _httpClientFactory;
+        private Serilog.ILogger _logger;
 
 
-        public UnicodeEmojiParser(IHttpClientFactory httpClientFactory)
+        public UnicodeEmojiParser(IHttpClientFactory httpClientFactory,
+                                  Serilog.ILogger logger)
         {
             _httpClientFactory = httpClientFactory;
+            _logger = logger;                               
+
         }
 
-        public async Task ParserRunFromAddress()
+
+        public async Task ParserRunFromAddress() {
+            //await ParserRunFromAddressGetWithAngleSharpBrowsingContextOpen(UNICODE_ORG_EMOJI_FULL_LIST);
+            await ParserRunFromAddressGetWithHttpClient(UNICODE_ORG_EMOJI_FULL_LIST);
+        }
+
+
+        public async Task ParserRunFromAddressGetWithAngleSharpBrowsingContextOpen(string address)
         {
             var config = Configuration.Default.WithDefaultLoader();
-            var address = UNICODE_ORG_EMOJI_FULL_LIST;
 
             Console.WriteLine($"Get Html... ");
 
@@ -42,11 +54,46 @@ namespace UnicodeEmojiParserToJson
 
             var url = new Url(address);
 
-            IDocument document = await browserContext.OpenAsync(url: url);
+            IDocument document;
+
+            using (Operation.Time($"Get HTML from {address}", address))
+            {
+                document = await browserContext.OpenAsync(url: url);
+            }
+           
 
             ParseDocument(document);
 
         }
+
+        public async Task ParserRunFromAddressGetWithHttpClient(string address)
+        {
+            var config = Configuration.Default.WithDefaultLoader();
+
+            Console.WriteLine($"Get Html... ");
+
+            IBrowsingContext browserContext = BrowsingContext.New(config);
+
+            IDocument document;
+            string htmlContent;
+
+            using (Operation.Time($"Get HTML from {address}", address))
+            {
+                htmlContent = await GetContentFromUrl(url: address,
+                                                      timeOut: Timeout.InfiniteTimeSpan);
+            }
+
+            using (Operation.Time($"Document parse with AngleSharp", address))
+            {
+                document = await browserContext.OpenAsync(req => req.Content(htmlContent));
+            }
+
+
+            ParseDocument(document);
+
+        }
+
+
 
         public async Task ParserRunFromStaticContent(string htmlContent)
         {
@@ -218,6 +265,31 @@ namespace UnicodeEmojiParserToJson
             File.WriteAllText(filePath, ToJson());
         }
 
+        public async Task<string> GetContentFromUrl(string url,
+                                                    TimeSpan timeOut)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
+            var client = _httpClientFactory.CreateClient();
+            client.Timeout = timeOut;
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                _logger.Error($"[GetContentFromUrl] {response.StatusCode} {response.RequestMessage}");
+                return string.Empty;
+            }
+        }
+
+        public async Task<string> GetContentFromUrl(string url)
+        {
+            return await GetContentFromUrl(url, new TimeSpan(0, 0, seconds: 100));
+        }
     }
+
 }
