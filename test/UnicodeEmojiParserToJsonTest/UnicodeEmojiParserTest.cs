@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,11 +12,21 @@ namespace UnicodeEmojiParserToJsonTest
 {
     public class UnicodeEmojiParserTest
     {
+        private Mock<IHttpClientFactory> _httpClientFactoryMock;
+        private Mock<Serilog.ILogger> _loggerMock;
+
+        public UnicodeEmojiParserTest()
+        {
+            _httpClientFactoryMock = new Mock<IHttpClientFactory>();
+            _loggerMock = new Mock<Serilog.ILogger>();
+        }
+
 
         [Fact]
         public void ParserRunFromStaticContentSimple()
         {
-            var parser = new UnicodeEmojiParser();
+            var parser = new UnicodeEmojiParser(_httpClientFactoryMock.Object, 
+                                                _loggerMock.Object);
 
             var htmlContentPath = TestHelper.ToApplicationPath("resources/simple.html");
 
@@ -34,7 +46,8 @@ namespace UnicodeEmojiParserToJsonTest
         [Fact]
         public void ToJson()
         {
-            var parser = new UnicodeEmojiParser();
+            var parser = new UnicodeEmojiParser(_httpClientFactoryMock.Object,
+                                                _loggerMock.Object);
 
             var htmlContentPath = TestHelper.ToApplicationPath("resources/simple.html");
 
@@ -51,7 +64,7 @@ namespace UnicodeEmojiParserToJsonTest
         //[Fact]
         //public async Task ToJsonDemo()
         //{
-        //    var parser = new UnicodeEmojiParser();
+        //    var parser = new UnicodeEmojiParser(_httpClientFactoryMock.Object);
 
         //    var jsonData = parser.ToJsonDemo();
 
@@ -63,7 +76,8 @@ namespace UnicodeEmojiParserToJsonTest
         [Fact]
         public void ToJsonWriteToFile()
         {
-            var parser = new UnicodeEmojiParser();
+            var parser = new UnicodeEmojiParser(_httpClientFactoryMock.Object,
+                                                _loggerMock.Object);
 
             var htmlContentPath = TestHelper.ToApplicationPath("resources/simple.html");
             var jsonPath = TestHelper.ToApplicationPath("resources/emoji.json");
@@ -79,19 +93,30 @@ namespace UnicodeEmojiParserToJsonTest
         }
 
 
-        //[Fact]
-        //public async Task ParserRunFromStaticContentFull()
-        //{
-        //    var parser = new UnicodeEmojiParser();
+        [Theory]
+        //[InlineData("unicode-org-emoji-charts-full-emoji-list-v13-0.html", 0, 0)]
+        [InlineData("unicode-org-emoji-charts-full-emoji-list-v14-0.html", 2109, 1853)]
+        [InlineData("unicode-org-emoji-charts-full-emoji-list-v15-1.html", 2162, 1902)]
+        public async Task ParserRunFromStaticContentFull(string resourceHtmlPageName, 
+                                                        int expectedRowsCount,
+                                                        int expectedEmojiCount)
+        {
+            var parser = new UnicodeEmojiParser(_httpClientFactoryMock.Object,
+                                                _loggerMock.Object);
 
-        //    var htmlContentPath = TestHelper.ToApplicationPath("resources/unicode-org-emoji-charts-full-emoji-list-13.0.html");
+            var htmlContentPath = TestHelper.ToApplicationPath($"resources/{resourceHtmlPageName}");
 
-        //    var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
+            var htmlContent = await File.ReadAllTextAsync(htmlContentPath);
 
-        //    await parser.ParserRunFromStaticContent(htmlContent);
+            await parser.ParserRunFromStaticContent(htmlContent);
 
-        //    Assert.True(parser.RowsCount > 0);
-        //}
+
+            Assert.Equal(expectedRowsCount, parser.RowsCount);
+            Assert.Equal(expectedEmojiCount, parser.Emojis.Count);
+
+
+            parser.ToJsonWriteToFile(@"D:\dev\fernandezja\full-emoji-unicode-json-generator\src\UnicodeEmojiParserToJson\bin\Debug\net8.0\emojis.json");
+        }
 
 
         //[Fact]

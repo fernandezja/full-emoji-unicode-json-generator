@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34526.213
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnicodeEmojiParserToJson", "UnicodeEmojiParserToJson\UnicodeEmojiParserToJson.csproj", "{AE6BCB03-4D8A-43F3-B690-57944209E23C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnicodeEmojiParserToJson", "UnicodeEmojiParserToJson\UnicodeEmojiParserToJson.csproj", "{AE6BCB03-4D8A-43F3-B690-57944209E23C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnicodeEmojiParserToJsonTest", "..\test\UnicodeEmojiParserToJsonTest\UnicodeEmojiParserToJsonTest.csproj", "{1111C2E7-7A05-46B4-B6BA-7BA418DF9EEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnicodeEmojiParserToJsonTest", "..\test\UnicodeEmojiParserToJsonTest\UnicodeEmojiParserToJsonTest.csproj", "{1111C2E7-7A05-46B4-B6BA-7BA418DF9EEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
