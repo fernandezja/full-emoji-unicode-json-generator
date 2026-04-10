@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
-namespace UnicodeEmojiParserToJsonTest
+namespace UnicodeEmojiParserToJsonTest;
+
+public static class TestHelper
 {
-    public static  class TestHelper
+    public static string ToApplicationPath(string fileName)
     {
-        public static string ToApplicationPath(string fileName)
-        {
-            var exePath = Path.GetDirectoryName(System.Reflection
-                                .Assembly.GetExecutingAssembly().Location);
-            var appPathMatcher = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
-            var appRoot = appPathMatcher.Match(exePath).Value;
-            return Path.Combine(appRoot, fileName);
-        }
+        var exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+        var binSeparator = $"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}";
+        var binIndex = exePath.LastIndexOf(binSeparator, StringComparison.Ordinal);
+        var appRoot = binIndex >= 0 ? exePath[..binIndex] : exePath;
+        return Path.Combine(appRoot, fileName);
     }
 }

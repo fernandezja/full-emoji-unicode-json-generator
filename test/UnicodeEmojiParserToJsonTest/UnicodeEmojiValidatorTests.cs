@@ -1,53 +1,41 @@
-﻿using System;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using UnicodeEmojiParserToJson;
+﻿using UnicodeEmojiParserToJson;
 using Xunit;
 
-namespace UnicodeEmojiParserToJsonTest
+namespace UnicodeEmojiParserToJsonTest;
+
+public class UnicodeEmojiValidatorTests
 {
-    public class UnicodeEmojiValidatorTests
+    [Fact]
+    public async Task IsValid_True_When_DataJsonIsValid()
     {
+        var validator = new UnicodeEmojiValidator();
+        var dataJsonPath = TestHelper.ToApplicationPath("resources/emoji.json");
+        var dataJson = await File.ReadAllTextAsync(dataJsonPath);
 
-        [Fact]
-        public async Task IsValid_True_When_DataJsonIsValid()
-        {
-            var validator = new UnicodeEmojiValidator();
+        var result = validator.IsValid(dataJson);
 
-            var dataJsonPath = TestHelper.ToApplicationPath("resources/emoji.json");
+        Assert.True(result);
+    }
 
-            var dataJson = await File.ReadAllTextAsync(dataJsonPath);
+    [Fact]
+    public void IsValid_False_When_DataJsonIsEmpty()
+    {
+        var validator = new UnicodeEmojiValidator();
 
-            var result = validator.IsValid(dataJson);
+        var result = validator.IsValid("{}");
 
-            Assert.True(result);
-        }
+        Assert.False(result);
+    }
 
-        [Fact]
-        public async Task IsValid_False_When_DataJsonIsEmtpy()
-        {
-            var validator = new UnicodeEmojiValidator();
+    [Fact]
+    public async Task IsValid_False_When_DataJsonIsNotValid()
+    {
+        var validator = new UnicodeEmojiValidator();
+        var dataJsonPath = TestHelper.ToApplicationPath("resources/emoji-invalid.json");
+        var dataJson = await File.ReadAllTextAsync(dataJsonPath);
 
-            var result = validator.IsValid("{}");
+        var result = validator.IsValid(dataJson);
 
-            Assert.False(result);
-        }
-
-
-        [Fact]
-        public async Task IsValid_False_When_DataJsonIsNotValid()
-        {
-            var validator = new UnicodeEmojiValidator();
-
-            var dataJsonPath = TestHelper.ToApplicationPath("resources/emoji-invalid.json");
-
-            var dataJson = await File.ReadAllTextAsync(dataJsonPath);
-
-            var result = validator.IsValid(dataJson);
-
-            Assert.False(result);
-        }
+        Assert.False(result);
     }
 }

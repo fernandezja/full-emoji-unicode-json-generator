@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace UnicodeEmojiParserToJson
+namespace UnicodeEmojiParserToJson;
+
+public class Emoji
 {
-    public class Emoji
-    {
-        [JsonPropertyName("chars")]
-        [JsonConverter(typeof(EmojiCharsConverter))]
-        public string Chars { get; set; }
+    [JsonPropertyName("chars")]
+    [JsonConverter(typeof(EmojiCharsConverter))]
+    public string Chars { get; set; } = string.Empty;
 
-        [JsonPropertyName("group")]
-        public string Group { get; set; }
+    [JsonPropertyName("group")]
+    public string Group { get; set; } = string.Empty;
 
-        [JsonPropertyName("subgroup")]
-        public string Subgroup { get; set; }
+    [JsonPropertyName("subgroup")]
+    public string Subgroup { get; set; } = string.Empty;
 
-        [JsonPropertyName("number")]
-        public string Number { get; set; }
+    [JsonPropertyName("number")]
+    public string Number { get; set; } = string.Empty;
 
-        [JsonPropertyName("code")]
-        public string Code { get; set; }
+    [JsonPropertyName("code")]
+    public string Code { get; set; } = string.Empty;
 
-        [JsonPropertyName("shortname")]
-        public string Shortname { get; set; }
-    }
+    [JsonPropertyName("shortname")]
+    public string Shortname { get; set; } = string.Empty;
 }
