@@ -1,53 +1,30 @@
-﻿using AngleSharp;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using System;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
+using UnicodeEmojiParserToJson;
 
-namespace UnicodeEmojiParserToJson
+var logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
+
+Console.WriteLine("UnicodeEmojiParserToJson!");
+
+var services = new ServiceCollection();
+services.AddHttpClient();
+services.AddSingleton<ILogger>(logger);
+services.AddScoped<UnicodeEmojiParser>();
+
+var serviceProvider = services.BuildServiceProvider();
+
+await ParserRun(serviceProvider);
+
+static async Task ParserRun(ServiceProvider serviceProvider)
 {
-    class Program
-    {
-        static async Task Main(string[] args)
-        {
-            var logger = new LoggerConfiguration()
-                            .WriteTo.Console()
-                            .CreateLogger();
+    var logger = serviceProvider.GetRequiredService<ILogger>();
+    var parser = serviceProvider.GetRequiredService<UnicodeEmojiParser>();
 
-            Console.WriteLine("UnicodeEmojiParserToJson!");
+    logger.Information("Step 1: Parser Init");
 
-            var services = new ServiceCollection();
+    await parser.ParserRunFromAddress();
 
-            services.AddHttpClient();
-
-            services.AddSingleton<Serilog.ILogger>(logger);
-            services.AddScoped<UnicodeEmojiParser>();
-
-            var serviceProvider = services.BuildServiceProvider();
-
-
-            await ParserRun(serviceProvider);
-
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-        }
-
-        private static async Task ParserRun(ServiceProvider serviceProvider)
-        {
-            var logger = serviceProvider.GetService<Serilog.ILogger>();
-            var parser = serviceProvider.GetService<UnicodeEmojiParser>();
-
-            logger.Information("Step 1: Parser Init");
-
-            await parser.ParserRunFromAddress();
-
-            var jsonData = parser.ToJson();
-
-            parser.ToJsonWriteToFile("emojis.json");
-        }
-    }
-
-
+    parser.ToJsonWriteToFile("emojis.json");
 }
