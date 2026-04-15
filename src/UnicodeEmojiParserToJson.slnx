@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../test/UnicodeEmojiParserToJsonTest/UnicodeEmojiParserToJsonTest.csproj" />
+  <Project Path="UnicodeEmojiParserToJson/UnicodeEmojiParserToJson.csproj" />
+</Solution>
